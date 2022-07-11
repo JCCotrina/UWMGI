@@ -48,6 +48,7 @@ config = {
 }
 
 dm = DataModule(**config)
+print(dm)
 
 model = SMP(config)
 

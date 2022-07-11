@@ -119,3 +119,5 @@ class DataModule(pl.LightningDataModule):
             shuffle=False,
             pin_memory=self.pin_memory,
         )
+    def __repr__(self):
+        return os.listdir(self.path)
