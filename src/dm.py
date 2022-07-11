@@ -123,4 +123,5 @@ class DataModule(pl.LightningDataModule):
     def __repr__(self):
         aux = pd.read_csv(self.file)
         print(aux.head())
-        return str(len(aux))
+        string = ' '.join([str(item) for item in self.path])
+        return string
