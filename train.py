@@ -6,18 +6,18 @@ from src.utils import parse_config
 from src.models import SMP
 import sys
 
-def get_cbs(config, f):
+def get_cbs(config):
     cbs = []
     if config['log']:
         checkpoint = ModelCheckpoint(
             dirpath='./', 
-            filename=f"{config['model']}-{config['backbone']}-fold{f+1}-{{val_iou:.4f}}",
+            filename=f"{config['model']}-{config['backbone']}-{{val_iou:.4f}}",
             save_top_k=1, 
             monitor='val_iou', 
             mode='max'
         )
         #lr_monitor = LearningRateMonitor(logging_interval='step')
-        cbs = [checkpoint, lr_monitor]
+        cbs = [checkpoint]
     return cbs
 
 config = {
