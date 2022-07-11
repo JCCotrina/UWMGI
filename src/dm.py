@@ -44,9 +44,8 @@ class Dataset(torch.utils.data.Dataset):
 class DataModule(pl.LightningDataModule):
     def __init__(
         self,
-        base_path='/data',
-        path=os.path.join(base_path, 'train'),
-        file=os.path.join(base_path, 'data_procesada.csv'),
+        path=os.path.join('./data/train'),
+        file=os.path.join('./data/data_procesada.csv'),
         val_split=0.7, # 120 / 40 / 40
         batch_size=32,
         num_workers=4,
