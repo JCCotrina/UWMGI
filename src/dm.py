@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import cv2
 import os
+import pandas as pd
 
 
 class Dataset(torch.utils.data.Dataset):
@@ -120,4 +121,5 @@ class DataModule(pl.LightningDataModule):
             pin_memory=self.pin_memory,
         )
     def __repr__(self):
-        return os.listdir(self.path)
+        aux = pd.read_csv(self.file)
+        return aux.head()
