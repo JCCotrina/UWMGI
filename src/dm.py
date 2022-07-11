@@ -78,8 +78,8 @@ class DataModule(pl.LightningDataModule):
         train = data.sample(n=int(len_data*self.val_split), random_state=22)
         val = data.drop(train.index, axis=0)
 
-        train.patient = train.patient.astype(str).str.zfill(3)
-        val.patient = val.patient.astype(str).str.zfill(3)
+#        train.patient = train.patient.astype(str).str.zfill(3)
+#        val.patient = val.patient.astype(str).str.zfill(3)
 
         if self.val_with_train:
             val = train
