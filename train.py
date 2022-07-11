@@ -41,7 +41,7 @@ config = {
     'model': 'Unet',
     'backbone': 'resnet18',
     'pretrain': 'imagenet',
-    'lose': 'bce',
+    'loss': 'bce',
     'optimizer': 'Adam',
     'lr': 1e-3,
     'max_epochs': 10,
