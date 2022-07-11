@@ -123,5 +123,6 @@ class DataModule(pl.LightningDataModule):
     def __repr__(self):
         aux = pd.read_csv(self.file)
         print(aux.head())
-        string = ' '.join([str(item) for item in self.path])
+        list_image_train = os.listdir(self.path)
+        string = ' '.join([str(item) for item in list_image_train])
         return string
