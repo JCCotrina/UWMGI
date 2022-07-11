@@ -16,16 +16,16 @@ def get_cbs(config, f):
             monitor='val_iou', 
             mode='max'
         )
-        lr_monitor = LearningRateMonitor(logging_interval='step')
+        #lr_monitor = LearningRateMonitor(logging_interval='step')
         cbs = [checkpoint, lr_monitor]
     return cbs
 
 config = {
-    'batch_size': 1,
-    'shuffle_train': False,
-    'train_batches': 1,
-    'val_with_train': True,
-    'val_batches': 1,
+    'batch_size': 32,
+    'shuffle_train': True,
+    'train_batches': 10,
+    'val_with_train': False,
+    'val_batches': 3,
     'train_trans':{
         'Resize':{
             'width':224,
@@ -45,15 +45,22 @@ config = {
     'optimizer': 'Adam',
     'lr': 1e-3,
     'max_epochs': 10,
+    'precision': 16,
+    'logger':True,
 }
 
 dm = DataModule(**config)
 
 model = SMP(config)
 
+wandb_logger = WandbLogger(project="UWMGI", config=config)
+
 trainer = pl.Trainer(
-    logger=None,
+    gpus=config['gpus'],
+    precision=config['precision'],
     max_epochs=config['max_epochs'],
+    logger=wandb_logger if config['log'] else None,
+    callbacks=get_cbs(config),
     limit_train_batches=config['train_batches'],
     limit_val_batches=config['val_batches']
 )
