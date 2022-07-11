@@ -28,13 +28,13 @@ config = {
     'val_batches': 1,
     'train_trans':{
         'Resize':{
-            'widht':224,
+            'width':224,
             'height':224
         }
     },
     'val_trans':{
         'Resize':{
-            'widht':224,
+            'width':224,
             'height':224
         }
     },
