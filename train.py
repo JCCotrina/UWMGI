@@ -46,7 +46,7 @@ config = {
     'lr': 1e-3,
     'max_epochs': 10,
     'precision': 16,
-    'logger':True,
+    'log':True,
     'gpus':1,
 }
 
