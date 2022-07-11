@@ -22,7 +22,7 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, ix):
         patient = self.data.iloc[ix].case
-        id_patient = self.data.iloc[ix].imd
+        id_patient = self.data.iloc[ix].id
         path_image = self.data.iloc[ix].path_img
         path_mask = self.data.iloc[ix].path_mask
         channel = self.data.iloc[ix].channel
