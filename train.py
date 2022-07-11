@@ -53,6 +53,7 @@ print(dm)
 model = SMP(config)
 
 trainer = pl.Trainer(
+    logger=None,
     max_epochs=config['max_epochs'],
     limit_train_batches=config['train_batches'],
     limit_val_batches=config['val_batches']
