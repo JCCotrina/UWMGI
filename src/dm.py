@@ -75,7 +75,7 @@ class DataModule(pl.LightningDataModule):
         data = pd.read_csv(self.file)
         len_data = len(data.index)
         # train / val splits
-        train = data.sample(n=int(len_data*val_split), random_state=22)
+        train = data.sample(n=int(len_data*self.val_split), random_state=22)
         val = data.drop(train.index, axis=0)
 
         train.patient = train.patient.astype(str).str.zfill(3)
