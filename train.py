@@ -47,6 +47,7 @@ config = {
     'max_epochs': 10,
     'precision': 16,
     'logger':True,
+    'gpus':1,
 }
 
 dm = DataModule(**config)
