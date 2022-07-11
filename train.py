@@ -48,7 +48,6 @@ config = {
 }
 
 dm = DataModule(**config)
-print(dm)
 
 model = SMP(config)
 
@@ -59,6 +58,7 @@ trainer = pl.Trainer(
     limit_val_batches=config['val_batches']
 )
 
+trainer.fit(model, dm)
 
 #def train(config):
 #    folds = [(1, 32), (33, 64), (65, 96), (97, 128), (129, 160)]
