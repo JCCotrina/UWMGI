@@ -40,7 +40,7 @@ config = {
     },
     'model': 'Unet',
     'backbone': 'resnet18',
-    'pretrain': 'imagenet',
+    'pretrained': 'imagenet',
     'loss': 'bce',
     'optimizer': 'Adam',
     'lr': 1e-3,
