@@ -21,11 +21,11 @@ def get_cbs(config):
     return cbs
 
 config = {
-    'batch_size': 32,
+    'batch_size': 64,
     'shuffle_train': True,
-    'train_batches': 1.,
+    'train_batches': 64,
     'val_with_train': False,
-    'val_batches': 1.,
+    'val_batches': 64,
     'train_trans':{
         'Resize':{
             'width':224,
