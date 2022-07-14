@@ -49,7 +49,7 @@ class DataModule(pl.LightningDataModule):
         file=os.path.join('./data/data_procesada.csv'),
         val_split=0.7, # 120 / 40 / 40
         batch_size=32,
-        num_workers=2,
+        num_workers=4,
         pin_memory=True,
         shuffle_train=True,
         val_with_train=False,

@@ -21,11 +21,11 @@ def get_cbs(config):
     return cbs
 
 config = {
-    'batch_size': 64,
+    'batch_size': 128,
     'shuffle_train': True,
-    'train_batches': 64,
+    'train_batches': 128,
     'val_with_train': False,
-    'val_batches': 64,
+    'val_batches': 128,
     'train_trans':{
         'Resize':{
             'width':224,
@@ -48,6 +48,7 @@ config = {
     'precision': 16,
     'log':True,
     'gpus':1,
+    'num_workers':4,
 }
 
 dm = DataModule(**config)
