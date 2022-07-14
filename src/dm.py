@@ -28,12 +28,17 @@ class Dataset(torch.utils.data.Dataset):
         channel = self.data.iloc[ix].channel
         print(f'directorio actual:{os.path.dirname(os.path.realpath(__file__))}')
         print(f'pwd:{os.getcwd()}')
-        print(f'ruta de imagen:{path_image}')
-        print(f'ruta de imagen:{path_mask}')
+        print(f'ruta de la imagen:{path_image}')
+        print(f'ruta de la mascara:{path_mask}')
         img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')[...,channel]
         norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype('int')
 
+        mask_read = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED)
+
+        if mask_read is not None:
+            mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype('int')
+        else 
+            print(f'La ruta que falta:{path_mask}')
         if self.trans:
             t = self.trans(image=norm_image, mask=mask)
             norm_image = t['image']
