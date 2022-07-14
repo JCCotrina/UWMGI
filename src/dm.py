@@ -1,5 +1,4 @@
 import torch
-
 import nibabel as nib
 from torch.utils.data import DataLoader
 import pytorch_lightning as pl
@@ -33,7 +32,7 @@ class Dataset(torch.utils.data.Dataset):
 
         mask_ = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED)
 
-        if mask_read is not None:
+        if mask_ is not None:
             mask = mask_.astype('int')
         else:
             print(f'La ruta que falta:{path_mask}')
