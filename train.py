@@ -23,9 +23,9 @@ def get_cbs(config):
 config = {
     'batch_size': 32,
     'shuffle_train': True,
-    'train_batches': 10,
+    'train_batches': 1.,
     'val_with_train': False,
-    'val_batches': 3,
+    'val_batches': 1.,
     'train_trans':{
         'Resize':{
             'width':224,
@@ -44,7 +44,7 @@ config = {
     'loss': 'bce',
     'optimizer': 'Adam',
     'lr': 1e-3,
-    'max_epochs': 10,
+    'max_epochs': ,
     'precision': 16,
     'log':True,
     'gpus':1,
