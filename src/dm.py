@@ -30,13 +30,8 @@ class Dataset(torch.utils.data.Dataset):
         img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')[...,channel]
         norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 
-        mask_ = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED)
+        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
-        if mask_ is not None:
-            mask = mask_.astype('int')
-        else:
-            print(f'La ruta que falta:{path_mask}')
-        
         if self.trans:
             t = self.trans(image=norm_image, mask=mask)
             norm_image = t['image']
