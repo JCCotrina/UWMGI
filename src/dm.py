@@ -26,7 +26,8 @@ class Dataset(torch.utils.data.Dataset):
         path_image = self.data.iloc[ix].path_img
         path_mask = self.data.iloc[ix].path_mask
         channel = self.data.iloc[ix].channel
-        
+        print(f'directorio actual:{os.path.dirname(os.path.realpath(__file__))}')
+        print(f'pwd:{os.getcwd()}')
         print(f'ruta de imagen:{path_image}')
         print(f'ruta de imagen:{path_image}')
         img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')[...,channel]
@@ -47,8 +48,8 @@ class Dataset(torch.utils.data.Dataset):
 class DataModule(pl.LightningDataModule):
     def __init__(
         self,
-        path=os.path.join('../../data/train'),
-        file=os.path.join('../../data/data_procesada.csv'),
+        path=os.path.join('./data/train'),
+        file=os.path.join('./data/data_procesada.csv'),
         val_split=0.7, # 120 / 40 / 40
         batch_size=32,
         num_workers=2,
