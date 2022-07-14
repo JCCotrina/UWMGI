@@ -44,7 +44,7 @@ config = {
     'loss': 'bce',
     'optimizer': 'Adam',
     'lr': 1e-3,
-    'max_epochs': ,
+    'max_epochs': 20,
     'precision': 16,
     'log':True,
     'gpus':1,
