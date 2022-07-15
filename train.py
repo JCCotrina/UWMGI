@@ -20,75 +20,26 @@ def get_cbs(config):
         cbs = [checkpoint]
     return cbs
 
-config = {
-    'batch_size': 128,
-    'shuffle_train': True,
-    'train_batches': 128,
-    'val_with_train': False,
-    'val_batches': 128,
-    'train_trans':{
-        'Resize':{
-            'width':224,
-            'height':224
-        }
-    },
-    'val_trans':{
-        'Resize':{
-            'width':224,
-            'height':224
-        }
-    },
-    'model': 'Unet',
-    'backbone': 'resnet18',
-    'pretrained': 'imagenet',
-    'loss': 'bce',
-    'optimizer': 'Adam',
-    'lr': 1e-3,
-    'max_epochs': 20,
-    'precision': 16,
-    'log':True,
-    'gpus':1,
-    'num_workers':4,
-}
+def train(config):
+    folds = [(1, 32), (33, 64), (65, 96), (97, 128), (129, 160)]
+    for f, fold in enumerate(folds):
+        config['val_split'] = fold
+        dm = DataModule(**config)
+        model = SMP(config)
+        wandb_logger = WandbLogger(project="MnMs2-cv", config=config)
+        trainer = pl.Trainer(
+            gpus=config['gpus'],
+            precision=config['precision'],
+            logger=wandb_logger if config['log'] else None,
+            max_epochs=config['max_epochs'],
+            callbacks=get_cbs(config, f),
+            limit_train_batches=config['train_batches'],
+            limit_val_batches=config['val_batches']
+        )
+        trainer.fit(model, dm)
+        wandb_logger.experiment.finish()
 
-dm = DataModule(**config)
-
-model = SMP(config)
-
-wandb_logger = WandbLogger(project="UWMGI", config=config)
-
-trainer = pl.Trainer(
-    gpus=config['gpus'],
-    precision=config['precision'],
-    max_epochs=config['max_epochs'],
-    logger=wandb_logger if config['log'] else None,
-    callbacks=get_cbs(config),
-    limit_train_batches=config['train_batches'],
-    limit_val_batches=config['val_batches']
-)
-
-trainer.fit(model, dm)
-
-#def train(config):
-#    folds = [(1, 32), (33, 64), (65, 96), (97, 128), (129, 160)]
-#    for f, fold in enumerate(folds):
-#        config['val_split'] = fold
-#        dm = DataModule(**config)
-#        model = SMP(config)
-#        wandb_logger = WandbLogger(project="MnMs2-cv", config=config)
-#        trainer = pl.Trainer(
-#            gpus=config['gpus'],
-#            precision=config['precision'],
-#            logger=wandb_logger if config['log'] else None,
-#            max_epochs=config['max_epochs'],
-#            callbacks=get_cbs(config, f),
-#            limit_train_batches=config['train_batches'],
-#            limit_val_batches=config['val_batches']
-#        )
-#        trainer.fit(model, dm)
-#        wandb_logger.experiment.finish()
-
-#if __name__ == '__main__':
-#    config_file = sys.argv[1]
-#    config = parse_config(config_file)
-#    train(config)
+if __name__ == '__main__':
+    config_file = sys.argv[1]
+    config = parse_config(config_file)
+    train(config)
