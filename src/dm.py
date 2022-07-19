@@ -27,9 +27,12 @@ class Dataset(torch.utils.data.Dataset):
         path_mask = self.data.iloc[ix].path_mask
         channel = self.data.iloc[ix].channel
 
-        img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')[...,channel]
-        norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
+        img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')
+        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        if path_mask == '':
+            mask = np.zeros((266, 266)).astype(int)
+        else:
+            mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
             t = self.trans(image=norm_image, mask=mask)
@@ -47,7 +50,7 @@ class DataModule(pl.LightningDataModule):
         self,
         path=os.path.join('./data/train'),
         file=os.path.join('./data/data_procesada.csv'),
-        val_split=0.7, # 120 / 40 / 40
+        fold=0, # 120 / 40 / 40
         batch_size=32,
         num_workers=4,
         pin_memory=True,
@@ -70,13 +73,13 @@ class DataModule(pl.LightningDataModule):
         self.val_trans = val_trans
 
 
-    def setup(self, stage=None):
+    def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
-        len_data = len(data.index)
+        #len_data = len(data.index)
         # train / val splits
-        train = data.sample(n=int(len_data*self.val_split), random_state=22)
-        val = data.drop(train.index, axis=0)
+        train = data.query("fold!=@fold").reset_index(drop=True)
+        val = data.query("fold==@fold").reset_index(drop=True)
 
 #        train.patient = train.patient.astype(str).str.zfill(3)
 #        val.patient = val.patient.astype(str).str.zfill(3)
