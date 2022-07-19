@@ -26,7 +26,7 @@ def train(config):
     #config['val_split'] = fold
     dm = DataModule(**config)
     model = SMP(config)
-    wandb_logger = WandbLogger(project="UWMGI", config=config)
+    wandb_logger = WandbLogger(project="UWMGI_2", config=config)
     trainer = pl.Trainer(
         gpus=config['gpus'],
         precision=config['precision'],
