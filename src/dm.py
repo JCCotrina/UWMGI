@@ -29,7 +29,7 @@ class Dataset(torch.utils.data.Dataset):
         img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
         print(path_mask)
-        if path_mask == '':
+        if np.isnan(path_mask):
             print("Condicional IF") 
             print("#"*14)
             print(path_mask)
