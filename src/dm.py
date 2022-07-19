@@ -79,7 +79,7 @@ class DataModule(pl.LightningDataModule):
     def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
-        data.path_mask.fillna('')
+        data['path_mask'] = data.path_mask.fillna('')
         #len_data = len(data.index)
         # train / val splits
         train = data.query("fold!=@fold").reset_index(drop=True)
