@@ -50,7 +50,6 @@ class DataModule(pl.LightningDataModule):
         self,
         path=os.path.join('./data/train'),
         file=os.path.join('./data/data_procesada.csv'),
-        fold=0, # 120 / 40 / 40
         batch_size=32,
         num_workers=4,
         pin_memory=True,
@@ -63,7 +62,6 @@ class DataModule(pl.LightningDataModule):
         super().__init__()
         self.path = path
         self.file = file
-        self.fold = fold
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.pin_memory = pin_memory
@@ -73,7 +71,7 @@ class DataModule(pl.LightningDataModule):
         self.val_trans = val_trans
 
 
-    def setup(self, stage=None):
+    def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
         #len_data = len(data.index)
