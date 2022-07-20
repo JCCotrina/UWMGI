@@ -82,8 +82,8 @@ class DataModule(pl.LightningDataModule):
         data['path_mask'] = data.path_mask.fillna('')
         #len_data = len(data.index)
         # train / val splits
-        train = data.query("fold!=@fold").reset_index(drop=True)
-        val = data.query("fold==@fold").reset_index(drop=True)
+        train = data.query("fold!=@fold" and "annotations!=0").reset_index(drop=True)
+        val = data.query("fold==@fold" and "annotations!=0").reset_index(drop=True)
 
 #        train.patient = train.patient.astype(str).str.zfill(3)
 #        val.patient = val.patient.astype(str).str.zfill(3)
