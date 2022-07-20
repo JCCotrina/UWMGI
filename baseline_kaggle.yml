@@ -2,7 +2,7 @@
 lr: 0.001
 optimizer: "Adam"
 batch_size: 128
-loss: "dice"
+loss: "bce"
 # data
 num_workers: 0
 pin_memory: True
@@ -28,7 +28,7 @@ max_epochs: 20
 train_batches: 1.
 shuffle_train: True
 val_batches: 1.
-val_with_train: True
+val_with_train: False
 log: True
 path: '../input/uw-madison-gi-tract-image-segmentation/train'
 file: '../input/preprocessing/data_procesada.csv'  
