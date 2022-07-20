@@ -28,7 +28,7 @@ max_epochs: 20
 train_batches: 1.
 shuffle_train: True
 val_batches: 1.
-val_with_train: False
+val_with_train: True
 log: True
 path: '../input/uw-madison-gi-tract-image-segmentation/train'
 file: '../input/preprocessing/data_procesada.csv'  
