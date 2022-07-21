@@ -1,3 +1,8 @@
+import sys
+  
+# appending a path
+sys.path.append('../working/UWMGI/src')
+
 import torch.nn.functional as F
 import pytorch_lightning as pl
 import torch
