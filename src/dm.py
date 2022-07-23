@@ -53,8 +53,8 @@ class Dataset(torch.utils.data.Dataset):
 class DataModule(pl.LightningDataModule):
     def __init__(
         self,
-        path=os.path.join('./data/train'),
-        file=os.path.join('./data/data_procesada.csv'),
+        path=os.path.join('../input/uw-madison-gi-tract-image-segmentation/train'),
+        file=os.path.join('../input/preprocessing/data_procesada.csv'),
         batch_size=32,
         num_workers=4,
         pin_memory=True,
