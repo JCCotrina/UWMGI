@@ -13,7 +13,7 @@ pretrained: imagenet
 load_from: False
 # data augmentation
 train_trans:
-  RandomSizedCrop:
+  RandomResizedCrop:
     width: 224
     height: 224
   GridDistortion: {}
