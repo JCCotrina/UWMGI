@@ -4,7 +4,7 @@ optimizer: "Adam"
 batch_size: 128
 loss: "bce"
 # data
-num_workers: 4
+num_workers: 2  
 pin_memory: True
 # model
 model: DeepLabV3Plus
@@ -25,7 +25,7 @@ val_trans:
 # training params
 gpus: 1
 precision: 16
-max_epochs: 20
+max_epochs: 15
 # debugging options
 train_batches: 1.
 shuffle_train: True
