@@ -1,7 +1,7 @@
 import torch.nn.functional as F
 import pytorch_lightning as pl
 import torch
-import src/losses as losses
+import losses as losses
 import segmentation_models_pytorch as smp
 
 class SMP(pl.LightningModule):
