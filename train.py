@@ -11,7 +11,7 @@ def get_cbs(config):
     if config['log']:
         checkpoint = ModelCheckpoint(
             dirpath='./', 
-            filename=f"{config['model']}-{config['backbone']}-{{val_iou:.4f}}",
+            filename=f"{config['model']}-{config['backbone']}-{config['max_epochs']}-{{val_iou:.4f}}",
             save_top_k=1, 
             monitor='val_iou', 
             mode='max'
