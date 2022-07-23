@@ -4,7 +4,7 @@ optimizer: "Adam"
 batch_size: 128
 loss: "bce"
 # data
-num_workers: 2  
+num_workers: 4 
 pin_memory: True
 # model
 model: DeepLabV3Plus
