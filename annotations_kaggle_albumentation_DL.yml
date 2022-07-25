@@ -8,7 +8,7 @@ num_workers: 2
 pin_memory: True
 # model
 model: DeepLabV3Plus
-backbone: efficientnet-b4
+backbone: efficientnet-b3
 pretrained: imagenet
 load_from: False
 # data augmentation
