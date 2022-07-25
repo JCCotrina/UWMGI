@@ -1,14 +1,14 @@
  # optimization
 lr: 0.001
 optimizer: "Adam"
-batch_size: 64
+batch_size: 128
 loss: "dice"
 # data
 num_workers: 2
 pin_memory: True
 # model
 model: DeepLabV3Plus
-backbone: efficientnet-b3
+backbone: efficientnet-b2
 pretrained: imagenet
 load_from: False
 # data augmentation
@@ -20,7 +20,6 @@ train_trans:
   RandomRotate90: {}
   GridDistortion: {}
   GaussianBlur: {}
-  ElasticTransform: {}
 val_trans:
   Resize:
     width: 224
