@@ -1,7 +1,7 @@
  # optimization
 lr: 0.001
 optimizer: "Adam"
-batch_size: 128
+batch_size: 64
 loss: "dice"
 # data
 num_workers: 2
