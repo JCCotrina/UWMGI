@@ -33,7 +33,7 @@ class Dataset(torch.utils.data.Dataset):
         #    print("Condicional IF") 
         #    print("#"*14)
         #    print(path_mask)
-            mask = np.zeros((266, 266)).astype(int)
+            mask = np.zeros((224, 224)).astype(int)
         else:
         #    print("#"*14)
         #    print(path_mask)
