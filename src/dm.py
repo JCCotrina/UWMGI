@@ -26,7 +26,7 @@ class Dataset(torch.utils.data.Dataset):
         path_image = self.data.iloc[ix].path_img
         path_mask = self.data.iloc[ix].path_mask
 
-        img = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE).astype('float32')
+        img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
         #print(path_mask)
         if path_mask == '':
