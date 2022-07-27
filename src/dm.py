@@ -37,7 +37,7 @@ class Dataset(torch.utils.data.Dataset):
             mask = t['mask'] 
 
         img_t = torch.from_numpy(norm_image).float().unsqueeze(0)
-        mask_oh = torch.tensor(mask.permute(2,0,1))
+        mask_oh = torch.tensor(np.transpose(mask, (2,0,1)))
 
         return id_patient, img_t, mask_oh
 
