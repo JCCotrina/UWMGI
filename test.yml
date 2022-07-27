@@ -23,7 +23,9 @@ train_trans:
     width: 224
     height: 224
   RandomRotate90: {}
-  ElasticTransform: {}
+  HorizontalFlip: {}
+  VerticalFlip: {}
+  Transpose: {}
   GridDistortion: {}
   GaussianBlur: {}
 val_trans:
