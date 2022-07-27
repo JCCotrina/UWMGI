@@ -42,7 +42,7 @@ class SMP(pl.LightningModule):
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         iou = self.iou(y_hat, y)
-        self.log('val_loss', loss, prog_bar=True)
+        self.log('val_loss', loss)
         self.log('val_iou', iou, prog_bar=True)
 
     def test_step(self, batch, batch_idx): 
