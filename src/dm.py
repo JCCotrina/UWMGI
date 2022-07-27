@@ -74,9 +74,6 @@ class DataModule(pl.LightningDataModule):
         train = data.query("fold!=@fold").reset_index(drop=True)
         val = data.query("fold==@fold").reset_index(drop=True)
 
-#        train.patient = train.patient.astype(str).str.zfill(3)
-#        val.patient = val.patient.astype(str).str.zfill(3)
-
         if self.val_with_train:
             val = train
 
@@ -116,9 +113,3 @@ class DataModule(pl.LightningDataModule):
             shuffle=False,
             pin_memory=self.pin_memory,
         )
-    def __repr__(self):
-        aux = pd.read_csv(self.file)
-        print(aux.head())
-        list_image_train = os.listdir(self.path)
-        string = ' '.join([str(item) for item in list_image_train])
-        return string

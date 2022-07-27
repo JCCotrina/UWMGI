@@ -2,7 +2,7 @@
 lr: 0.001
 optimizer: "Adam"
 batch_size: 128
-loss: "bce"
+loss: "criterion"
 scheduler:
   OneCycleLR:
     pct_start: 0.1
@@ -10,7 +10,7 @@ scheduler:
     total_steps: 100
     verbose: True
 # data
-num_workers: 4 
+num_workers: 2
 pin_memory: True
 # model
 model: DeepLabV3Plus
