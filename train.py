@@ -27,7 +27,7 @@ def train(config):
         model = SMP.load_from_checkpoint(config['load_from'])
     else:
         model = SMP(config)
-    wandb_logger = WandbLogger(project="UWMGI_2", config=config)
+    wandb_logger = WandbLogger(project="UWMGI_3", config=config)
     trainer = pl.Trainer(
         gpus=config['gpus'],
         precision=config['precision'],

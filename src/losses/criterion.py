@@ -5,5 +5,5 @@ import segmentation_models_pytorch as smp
 
 TverskyLoss = smp.losses.TverskyLoss(mode='multilabel', log_loss=False)
 
-def criteri(pr, gt):
+def criterion(pr, gt):
     return 0.5*bce(pr, gt) + 0.5*TverskyLoss(pr, gt)
