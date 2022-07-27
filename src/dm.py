@@ -28,7 +28,6 @@ class Dataset(torch.utils.data.Dataset):
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        print(f'mask:{path_mask}')
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
@@ -38,7 +37,8 @@ class Dataset(torch.utils.data.Dataset):
 
         img_t = torch.from_numpy(norm_image).float().unsqueeze(0)
         mask_oh = torch.tensor(np.transpose(mask, (2,0,1)))
-
+        
+        print(f'return:{img_t.shape} & {mask_oh.shape}')
         return id_patient, img_t, mask_oh
 
 
