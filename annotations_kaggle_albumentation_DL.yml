@@ -27,7 +27,7 @@ val_trans:
 # training params
 gpus: 1
 precision: 16
-max_epochs: 20
+max_epochs: 15
 # debugging options
 train_batches: 1.
 shuffle_train: True

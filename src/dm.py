@@ -15,7 +15,7 @@ class Dataset(torch.utils.data.Dataset):
         self.path = path
         self.data = data
         self.trans = trans
-        self.num_classes = 4
+        self.num_classes = 3
 
     def __len__(self):
         return len(self.data)

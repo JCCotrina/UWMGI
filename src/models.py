@@ -8,7 +8,7 @@ class SMP(pl.LightningModule):
     def __init__(self, config=None):
         super().__init__()
         self.save_hyperparameters(config)
-        self.num_classes = 4
+        self.num_classes = 3
         self.loss = getattr(losses, self.hparams['loss'])
         self.model = getattr(smp, self.hparams['model'])(
             encoder_name=self.hparams['backbone'],
