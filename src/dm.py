@@ -28,16 +28,7 @@ class Dataset(torch.utils.data.Dataset):
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        #print(path_mask)
-        if path_mask == '':
-        #    print("Condicional IF") 
-        #    print("#"*14)
-        #    print(path_mask)
-            mask = np.zeros((224, 224)).astype(int)
-        else:
-        #    print("#"*14)
-        #    print(path_mask)
-            mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
+        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
             t = self.trans(image=norm_image, mask=mask)
@@ -45,7 +36,7 @@ class Dataset(torch.utils.data.Dataset):
             mask = t['mask'] 
 
         img_t = torch.from_numpy(norm_image).float().unsqueeze(0)
-        mask_oh = torch.nn.functional.one_hot(torch.from_numpy(mask).long(), self.num_classes).permute(2,0,1).float()
+        mask_oh = torch.tensor(mask.permute(2,0,1))
 
         return id_patient, img_t, mask_oh
 
@@ -79,9 +70,6 @@ class DataModule(pl.LightningDataModule):
     def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
-        data['path_mask'] = data.path_mask.fillna('')
-        #len_data = len(data.index)
-        # train / val splits
         train = data.query("fold!=@fold").reset_index(drop=True)
         val = data.query("fold==@fold").reset_index(drop=True)
 
