@@ -9,4 +9,4 @@ def bce(pr, gt):
     return F.binary_cross_entropy_with_logits(pr, gt)
     
 def criterion(pr, gt):
-    return 0.5*bce(pr, gt) + 0.5*TverskyLoss(pr, gt)
+    return 0.5*bce(pr, gt.float()) + 0.5*TverskyLoss(pr, gt)
