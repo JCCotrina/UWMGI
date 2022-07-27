@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 import segmentation_models_pytorch as smp
-import losses.bce 
+from .dice import dice 
 
 TverskyLoss = smp.losses.TverskyLoss(mode='multilabel', log_loss=False)
 BCELoss     = smp.losses.SoftBCEWithLogitsLoss()
