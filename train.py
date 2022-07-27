@@ -16,14 +16,12 @@ def get_cbs(config):
             monitor='val_iou', 
             mode='max'
         )
-        #lr_monitor = LearningRateMonitor(logging_interval='step')
-        cbs = [checkpoint]
+        lr_monitor = LearningRateMonitor(logging_interval='step')
+        cbs = [checkpoint, lr_monitor]
     return cbs
 
 def train(config):
-    #folds = [(1, 32), (33, 64), (65, 96), (97, 128), (129, 160)]
-    #for f, fold in enumerate(folds):
-    #config['val_split'] = fold
+
     dm = DataModule(**config)
     if config['load_from']:
         model = SMP.load_from_checkpoint(config['load_from'])
