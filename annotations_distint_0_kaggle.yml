@@ -1,7 +1,7 @@
  # optimization
 lr: 0.001
 optimizer: "Adam"
-batch_size: 128
+batch_size: 1
 loss: "bce"
 # data
 num_workers: 0
@@ -25,9 +25,9 @@ gpus: 1
 precision: 16
 max_epochs: 20
 # debugging options
-train_batches: 1.
+train_batches: .2
 shuffle_train: True
-val_batches: 1.
+val_batches: .2
 val_with_train: False
 log: True
 path: '../input/uw-madison-gi-tract-image-segmentation/train'
