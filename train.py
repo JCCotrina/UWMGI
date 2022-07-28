@@ -6,7 +6,7 @@ from src.utils import parse_config
 from src.models import SMP
 import sys
 
-def get_cbs(config, f):
+def get_cbs(config):
     cbs = []
     if config['log']:
         checkpoint = ModelCheckpoint(
@@ -21,12 +21,10 @@ def get_cbs(config, f):
     return cbs
 
 def train(config):
-
+    pl.seed_everything(42, workers=True)
     dm = DataModule(**config)
-    if config['load_from']:
-        model = SMP.load_from_checkpoint(config['load_from'])
-    else:
-        model = SMP(config)
+    model = SMP.load_from_checkpoint(config['load_from']) if config['load_from'] else SMP(config)
+
     wandb_logger = WandbLogger(project="UWMGI_3", config=config)
     trainer = pl.Trainer(
         gpus=config['gpus'],
@@ -35,7 +33,8 @@ def train(config):
         max_epochs=config['max_epochs'],
         callbacks=get_cbs(config),
         limit_train_batches=config['train_batches'],
-        limit_val_batches=config['val_batches']
+        limit_val_batches=config['val_batches'],
+        deterministic=True
     )
     trainer.fit(model, dm)
     wandb_logger.experiment.finish()
