@@ -8,4 +8,5 @@ TverskyLoss = smp.losses.TverskyLoss(mode='multilabel', log_loss=False)
 
 def criterion(pr, gt):
     loss = F.CrossEntropyLoss()
+    print(gt.dtype())
     return 0.5*loss(pr, gt) + 0.5*TverskyLoss(pr, gt)
