@@ -26,8 +26,8 @@ class Dataset(torch.utils.data.Dataset):
         path_image = self.data.iloc[ix].path_img
         path_mask = self.data.iloc[ix].path_mask
 
-        img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED).astype('float32')
-        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
+        norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
@@ -38,7 +38,7 @@ class Dataset(torch.utils.data.Dataset):
         img_t = torch.from_numpy(norm_image).float().unsqueeze(0)
         mask_oh = torch.from_numpy(mask).permute(2,0,1).float()
 
-        return id_patient, img_t, mask_oh
+        return img_t, mask_oh
 
 
 class DataModule(pl.LightningDataModule):
@@ -70,6 +70,7 @@ class DataModule(pl.LightningDataModule):
     def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
+
         train = data.query("fold!=@fold").reset_index(drop=True)
         val = data.query("fold==@fold").reset_index(drop=True)
 

@@ -6,7 +6,7 @@ from src.utils import parse_config
 from src.models import SMP
 import sys
 
-def get_cbs(config):
+def get_cbs(config, f):
     cbs = []
     if config['log']:
         checkpoint = ModelCheckpoint(

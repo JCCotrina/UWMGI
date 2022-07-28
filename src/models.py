@@ -29,7 +29,7 @@ class SMP(pl.LightningModule):
         return torch.mean(ious)
 
     def training_step(self, batch, batch_idx):
-        _, x, y = batch
+        x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         iou = self.iou(y_hat, y)
@@ -38,7 +38,7 @@ class SMP(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        _, x, y = batch
+        x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         iou = self.iou(y_hat, y)
@@ -46,7 +46,7 @@ class SMP(pl.LightningModule):
         self.log('val_iou', iou, prog_bar=True)
 
     def test_step(self, batch, batch_idx): 
-        _, x, y = batch
+        x, y = batch
         y_hat = self(x)
         iou = self.iou(y_hat, y)
         self.log('test_iou', iou, prog_bar=True)
