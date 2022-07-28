@@ -8,4 +8,4 @@ BCELoss     = smp.losses.SoftBCEWithLogitsLoss()
 
 def criterion(pr, gt):
 
-    return F.binary_cross_entropy_with_logits(pr, gt)
+    return F.CrossEntropyLoss(pr, gt)
