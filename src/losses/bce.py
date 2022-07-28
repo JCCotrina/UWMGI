@@ -1,5 +1,5 @@
 import torch
-import torch.nn.functional as F
+import torch.nn as F
 
 def bce(pr, gt):
     #input (torch.Tensor): input data tensor with shape :math:`(B, *)`.
