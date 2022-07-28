@@ -9,4 +9,6 @@ BCELoss     = smp.losses.SoftBCEWithLogitsLoss()
 def criterion(pr, gt):
     print(pr.shape)
     print(gt.shape)
+    print(pr)
+    print(gt)
     return 0.5*BCELoss(pr, gt) + 0.5*TverskyLoss(pr, gt)
