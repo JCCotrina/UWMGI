@@ -34,7 +34,7 @@ def train(config):
         callbacks=get_cbs(config),
         limit_train_batches=config['train_batches'],
         limit_val_batches=config['val_batches'],
-        deterministic=True
+
     )
     trainer.fit(model, dm)
     wandb_logger.experiment.finish()
