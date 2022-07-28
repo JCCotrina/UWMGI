@@ -1,5 +1,5 @@
 import torch
-import torch.nn.functional as F
+import torch.nn as F
 import segmentation_models_pytorch as smp
 from .bce import bce 
 
