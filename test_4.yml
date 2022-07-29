@@ -6,7 +6,7 @@ loss: "criterion"
 scheduler:
   CosineAnnealingLR:
     eta_min: 0.00001
-    t_max: 10
+    T_max: 10
     verbose: True
 # data
 num_workers: 2
