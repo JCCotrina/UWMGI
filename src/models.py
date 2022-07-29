@@ -41,7 +41,7 @@ class SMP(pl.LightningModule):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
-        iou = self.iou(y_hat, y)
+        iou = self.iou(torch.sigmoid(y_hat), y)
         self.log('val_loss', loss)
         self.log('val_iou', iou, prog_bar=True)
 
