@@ -29,12 +29,8 @@ train_trans:
   HorizontalFlip: {}
   VerticalFlip: {}
   Transpose: {}
-  GridDistortion:
-    p: 0.3
-  GaussianBlur: 
-    p: 0.3
-  ElasticTransform:
-    p: 0.3
+  GridDistortion: {}
+  GaussianBlur: {}
   Rotate: {}
 val_trans:
   Resize:
