@@ -28,7 +28,8 @@ train_trans:
   RandomRotate90: {}
   Transpose: {}
   OneOf:
-    transforms: ElasticTransform
+    transforms:
+      - ElasticTransform
       - GridDistortion
       - GaussianBlur
 val_trans:
