@@ -28,9 +28,7 @@ train_trans:
   RandomRotate90: {}
   Transpose: {}
   OneOf:
-    ElasticTransform: {}
-    GridDistortion: {}
-    GaussianBlur: {}
+    transform: [ElasticTransform, GridDistortion, GaussianBlur]
 val_trans:
   Resize:
     width: 224
