@@ -24,15 +24,9 @@ train_trans:
   Transpose: {}
   HorizontalFlip: {}
   ShiftScaleRotate: {}
-  OneOf: 
-    transforms:
-    - GridDistortion: 
-      p: 0.5
-    - CoarseDropout: 
-      p: 0.5
-    - ElasticTransform: 
-      p: 0.5
-    p: 1.0
+  GridDistortion: {}
+  CoarseDropout: {}
+  GaussianBlur: {}
 val_trans:
   Resize:
     width: 224
