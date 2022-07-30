@@ -29,9 +29,12 @@ train_trans:
   Transpose: {}
   OneOf:
     transforms: 
-      - ElasticTransform: {}
-      - GridDistortion: {}
-      - GaussianBlur: {}
+      - ElasticTransform:
+        p: 0.5
+      - GridDistortion:
+        p: 0.5
+      - GaussianBlur:
+        p: 0.5
 val_trans:
   Resize:
     width: 224
