@@ -25,13 +25,7 @@ train_trans:
   HorizontalFlip: {}
   ShiftScaleRotate: {}
   OneOf: 
-    transforms :
-      - GridDistortion:
-        p: 0.5
-      - CoarseDropout:
-        p: 0.5
-      - ElasticTransform:
-        p: 0.5
+    transforms : [ "GridDistortion", "CoarseDropout", "ElasticTransform"]
 val_trans:
   Resize:
     width: 224
