@@ -23,7 +23,7 @@ train_trans:
     height: 224
   RandomRotate90: {}
   Transpose: {}
-  ElasticTransform: {}
+  GridDistortion: {}
 val_trans:
   Resize:
     width: 224
