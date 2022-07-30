@@ -25,7 +25,7 @@ train_trans:
   HorizontalFlip: {}
   ShiftScaleRotate: {}
   OneOf: 
-    transform :
+    transforms :
       - GridDistortion: {}
       - CoarseDropout: {} 
       - ElasticTransform: {}
