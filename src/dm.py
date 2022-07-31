@@ -91,9 +91,9 @@ class DataModule(pl.LightningDataModule):
                 A.VerticalFlip(),
                 A.ShiftScaleRotate(),
                 A.CoarseDropout(),
+                A.GridDistortion(),
                 A.OneOf([
                     A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
-                    A.GridDistortion(num_steps=5, distort_limit=0.05, p=1.0),
                     A.GaussianBlur(p=1.0)                  
                     ], p=0.2),
             ])
