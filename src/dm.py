@@ -81,9 +81,22 @@ class DataModule(pl.LightningDataModule):
         self.train_ds = Dataset(
             self.path,
             train,
+            # trans = A.Compose([
+            #     getattr(A, trans)(**params) for trans, params in self.train_trans.items()
+            # ]) if self.train_trans else None
             trans = A.Compose([
-                getattr(A, trans)(**params) for trans, params in self.train_trans.items()
-            ]) if self.train_trans else None
+                A.Resize(width=224, height=224),
+                A.Transpose(),
+                A.HorizontalFlip(),
+                A.VerticalFlip(),
+                A.ShiftScaleRotate(),
+                A.CoarseDropout(),
+                A.OneOf([
+                    A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
+                    A.GridDistortion(num_steps=5, distort_limit=0.05, p=1.0),
+                    A.GaussianBlur(distort_limit=2, shift_limit=0.5, p=1)                  
+                    ], p=0.2),
+            ])
         )
 
 

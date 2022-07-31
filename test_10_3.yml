@@ -17,17 +17,17 @@ backbone: resnet18
 pretrained: imagenet
 load_from: False
 # data augmentation
-train_trans:
-  Resize:
-    width: 224
-    height: 224
-  Transpose: {}
-  HorizontalFlip: {}
-  VerticalFlip: {}
-  ShiftScaleRotate: {}
-  GridDistortion: {}
-  CoarseDropout: {}
-  GaussianBlur: {}
+# train_trans:
+#   Resize:
+#     width: 224
+#     height: 224
+#   Transpose: {}
+#   HorizontalFlip: {}
+#   VerticalFlip: {}
+#   ShiftScaleRotate: {}
+#   GridDistortion: {}
+#   CoarseDropout: {}
+#   GaussianBlur: {}
 val_trans:
   Resize:
     width: 224
