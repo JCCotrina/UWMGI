@@ -23,15 +23,10 @@ train_trans:
     height: 224
   Transpose: {}
   HorizontalFlip: {}
+  VerticalFlip: {}
   ShiftScaleRotate: {}
   CoarseDropout: {}
-  OneOf:
-    transforms : [
-      {GridDistortion: {}},
-      {GaussianBlur: {}},
-      {ElasticTransform: {}}
-      ]
-    p : 1.0
+  ElasticTransform: {}
 val_trans:
   Resize:
     width: 224
