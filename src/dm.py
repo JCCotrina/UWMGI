@@ -86,16 +86,16 @@ class DataModule(pl.LightningDataModule):
             # ]) if self.train_trans else None
             trans = A.Compose([
                 A.Resize(width=224, height=224),
-                A.Transpose(),
+                A.RandomRotate90(),
                 A.HorizontalFlip(),
                 A.VerticalFlip(),
                 A.ShiftScaleRotate(),
                 A.CoarseDropout(),
-                A.GridDistortion(),
                 A.OneOf([
                     A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
-                    A.GaussianBlur(p=1.0)                  
-                    ], p=0.2),
+                    A.GaussianBlur(p=1.0),
+                    A.GridDistortion(),                 
+                    ], p=0.3),
             ])
         )
 
