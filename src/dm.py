@@ -27,7 +27,12 @@ class Dataset(torch.utils.data.Dataset):
         path_mask = self.data.iloc[ix].path_mask
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
-        norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        img = np.tile(img[..., None], [1, 1, 3])
+        mx = np.max(img)
+        if mx:
+            norm_image /= mx
+
+        # norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
@@ -86,11 +91,9 @@ class DataModule(pl.LightningDataModule):
             # ]) if self.train_trans else None
             trans = A.Compose([
                 A.Resize(width=224, height=224),
-                A.RandomRotate90(),
                 A.HorizontalFlip(),
-                A.VerticalFlip(),
                 A.ShiftScaleRotate(),
-                A.CoarseDropout(),
+                A.CoarseDropout(),               
                 A.OneOf([
                     A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
                     A.GaussianBlur(p=1.0),

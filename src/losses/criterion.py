@@ -4,8 +4,8 @@ import segmentation_models_pytorch as smp
 from .bce import bce 
 
 TverskyLoss = smp.losses.TverskyLoss(mode='multilabel', log_loss=False)
-# BCELoss     = smp.losses.SoftBCEWithLogitsLoss()
+BCELoss     = smp.losses.SoftBCEWithLogitsLoss()
 
 def criterion(pr, gt):
-    loss = F.CrossEntropyLoss()
-    return 0.5*loss(pr, gt) + 0.5*TverskyLoss(pr, gt)
+    # loss = F.CrossEntropyLoss()
+    return 0.5*BCELoss(pr, gt) + 0.5*TverskyLoss(pr, gt)
