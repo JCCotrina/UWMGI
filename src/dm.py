@@ -92,8 +92,7 @@ class DataModule(pl.LightningDataModule):
             trans = A.Compose([
                 A.Resize(width=224, height=224),
                 A.HorizontalFlip(),
-                A.ShiftScaleRotate(),
-                A.CoarseDropout(),               
+                A.ShiftScaleRotate(),            
                 A.OneOf([
                     A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
                     A.GaussianBlur(p=1.0),
