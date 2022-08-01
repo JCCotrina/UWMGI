@@ -42,5 +42,5 @@ shuffle_train: True
 val_batches: 1.
 val_with_train: False
 log: True
-path: '../input/uw-madison-gi-tract-image-segmentation/train'
-file: '../input/preprocessing/data_procesada.csv'  
+path: './data/train'
+file: './data/data_procesada.csv'  
