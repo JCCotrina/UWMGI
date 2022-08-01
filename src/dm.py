@@ -30,8 +30,8 @@ class Dataset(torch.utils.data.Dataset):
         img = np.tile(img[..., None], [1, 1, 3])
         mx = np.max(img)
         if mx:
-            norm_image /= mx
-
+            img /= mx
+        norm_image = img
         # norm_image = cv2.normalize(img, None, alpha=0, beta=255,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
