@@ -2,7 +2,7 @@
 lr: 0.003
 optimizer: "Adam"
 batch_size: 128
-loss: "dice"
+loss: "criterion"
 scheduler:
   CosineAnnealingLR:
     eta_min: 0.00001
@@ -42,5 +42,5 @@ shuffle_train: True
 val_batches: 1.
 val_with_train: False
 log: True
-path: './data/train'
-file: './data/data_procesada.csv'  
+path: '../input/uw-madison-gi-tract-image-segmentation/train'
+file: '../input/preprocessing/data_procesada.csv'  

@@ -13,7 +13,7 @@ class SMP(pl.LightningModule):
         self.model = getattr(smp, self.hparams['model'])(
             encoder_name=self.hparams['backbone'],
             encoder_weights=self.hparams['pretrained'],
-            in_channels=1,
+            in_channels=3,
             classes=self.num_classes,
         )
 

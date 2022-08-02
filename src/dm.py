@@ -27,7 +27,9 @@ class Dataset(torch.utils.data.Dataset):
         path_mask = self.data.iloc[ix].path_mask
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
-        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        img = np.tile(img[..., None], [1, 1, 3])
+        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype="float32")
+        
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
@@ -84,16 +86,19 @@ class DataModule(pl.LightningDataModule):
             # trans = A.Compose([
             #     getattr(A, trans)(**params) for trans, params in self.train_trans.items()
             # ]) if self.train_trans else None
-            trans = A.Compose([
-                A.Resize(width=224, height=224),
-                A.HorizontalFlip(),
-                A.ShiftScaleRotate(),            
-                A.OneOf([
-                    A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
-                    # A.GaussianBlur(p=1.0),
-                    A.GridDistortion(),                 
-                    ], p=0.3),
-            ])
+            trans =A.Compose([
+                    A.Resize(*CFG.img_size, interpolation=cv2.INTER_NEAREST),
+                    A.HorizontalFlip(p=0.5),
+            #         A.VerticalFlip(p=0.5),
+                    A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
+                    A.OneOf([
+                        A.GridDistortion(num_steps=5, distort_limit=0.05, p=1.0),
+            # #             A.OpticalDistortion(distort_limit=0.05, shift_limit=0.05, p=1.0),
+                        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0)
+                    ], p=0.25),
+                    A.CoarseDropout(max_holes=8, max_height=CFG.img_size[0]//20, max_width=CFG.img_size[1]//20,
+                                    min_holes=5, fill_value=0, mask_fill_value=0, p=0.5),
+                    ], p=1.0),
         )
 
 
