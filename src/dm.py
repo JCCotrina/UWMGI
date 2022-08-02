@@ -28,7 +28,7 @@ class Dataset(torch.utils.data.Dataset):
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
         img = np.tile(img[..., None], [1, 1, 3])
-        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype="float32")
+        norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX)
         mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
 
         if self.trans:
