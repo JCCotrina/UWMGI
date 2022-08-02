@@ -36,7 +36,7 @@ class Dataset(torch.utils.data.Dataset):
             norm_image = t['image']
             mask = t['mask'] 
 
-        img_t = torch.from_numpy(norm_image).float().unsqueeze(0)
+        img_t = torch.from_numpy(norm_image).permute(2,0,1).float()
         mask_oh = torch.from_numpy(mask).permute(2,0,1).float()
 
         return img_t, mask_oh
