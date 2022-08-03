@@ -26,7 +26,7 @@ class Dataset(torch.utils.data.Dataset):
         path_image = self.path_img[ix]
         path_mask = self.path_mask[ix].replace("../input/preprocessing/", "../input/preprocessing-uwm/")
 
-        print(path_image)
+        print(len(path_image))
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
         img = np.tile(img[..., None], [1, 1, 3]).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
