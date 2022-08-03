@@ -20,30 +20,37 @@ class SMP(pl.LightningModule):
     def forward(self, x):
         return self.model(x)
 
-    def iou(self, pr, gt, th=0.5, eps=1e-7):
-        pr = torch.sigmoid(pr) > th
-        gt = gt > th
-        intersection = torch.sum(gt * pr, axis=(-2,-1))
-        union = torch.sum(gt, axis=(-2,-1)) + torch.sum(pr, axis=(-2,-1)) - intersection + eps
+    def iou(self, pr, gt, th=0.5, eps=1e-3):
+        pr = (pr > th).to(torch.float32)
+        gt = gt.to(torch.float32)
+
+        intersection = torch.sum(gt * pr, dim=(2,3))
+        union = torch.sum(gt, dim=(2,3)) + torch.sum(pr, dim=(2,3)) - intersection + eps
         ious = (intersection + eps) / union
-        return torch.mean(ious)
+        return torch.mean(ious, dim=(1,0))
 
     def training_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
+        y_hat = torch.sigmoid(y_hat)
         iou = self.iou(y_hat, y)
+        dice = self.dice(y_hat, y)
         self.log('loss', loss)
         self.log('iou', iou, prog_bar=True)
+        self.log('dice', dice)
         return loss
 
     def validation_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
+        y_hat = torch.sigmoid(y_hat)
         iou = self.iou(y_hat, y)
+        dice = self.dice(y_hat, y)
         self.log('val_loss', loss)
         self.log('val_iou', iou, prog_bar=True)
+        self.log('dice', dice)
 
     def test_step(self, batch, batch_idx): 
         x, y = batch

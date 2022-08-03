@@ -1,10 +1,11 @@
 import torch
 import torch.nn.functional as F
 
-def dice(pr, gt, eps=1):
-        pr = torch.sigmoid(pr)
-        tp = torch.sum(gt * pr, axis=(-2,-1))
-        fp = torch.sum(pr, axis=(-2,-1)) - tp
-        fn = torch.sum(gt, axis=(-2,-1)) - tp
-        loss = 1. - (2.*tp + eps) / (2.*tp + fn + fp + eps)
-        return torch.mean(loss)
+def dice(pr, gt, eps=1e-3):
+        gt = gt.to(torch.float32)
+        pr = (pr>0.5).to(torch.float32)
+        tp = torch.sum(gt * pr, dim=(2,3))
+        fp = torch.sum(pr, axis=(2, 3)) 
+        fn = torch.sum(gt, axis=(2, 3)) 
+        loss = (2.*tp + eps) / (fn + fp + eps)
+        return torch.mean(loss, dim=(1,0))

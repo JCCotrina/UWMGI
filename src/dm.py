@@ -13,31 +13,32 @@ import pandas as pd
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, path, data, trans=None):
         self.path = path
-        self.data = data
-        self.trans = trans
+        self.path_img = data['path_img'].tolist()
+        self.path_mask = trans['path_mask'].tolist()
         self.num_classes = 3
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, ix):
-        patient = self.data.iloc[ix].case
-        id_patient = self.data.iloc[ix].id
-        path_image = self.data.iloc[ix].path_img
-        path_mask = self.data.iloc[ix].path_mask
+        path_image = self.path_img[ix]
+        path_mask = self.path_mask[ix]
 
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
-        img = np.tile(img[..., None], [1, 1, 3])
+        img = np.tile(img[..., None], [1, 1, 3]).astype('float32')
         norm_image = cv2.normalize(img, None, alpha=0, beta=1,norm_type= cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype(int)
+
+        mask = cv2.imread(path_mask, cv2.IMREAD_UNCHANGED).astype('float32')/255.0
 
         if self.trans:
             t = self.trans(image=norm_image, mask=mask)
             norm_image = t['image']
             mask = t['mask'] 
 
-        img_t = torch.from_numpy(norm_image).permute(2,0,1).float()
-        mask_oh = torch.from_numpy(mask).permute(2,0,1).float()
+        # img_t = torch.from_numpy(norm_image).permute(2,0,1).float()
+        # mask_oh = torch.from_numpy(mask).permute(2,0,1).float()
+        img_t = np.transpose(norm_image, (2,0,1))
+        mask_oh = np.transpose(mask ,(2,0,1))
 
         return img_t, mask_oh
 
@@ -117,6 +118,7 @@ class DataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             shuffle=self.shuffle_train,
             pin_memory=self.pin_memory,
+            drop_last=False
         )
 
     def val_dataloader(self):
