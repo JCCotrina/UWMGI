@@ -14,7 +14,7 @@ class Dataset(torch.utils.data.Dataset):
     def __init__(self, path, data, trans=None):
         self.path = path
         self.path_img = data['path_img'].tolist()
-        self.path_mask = trans['path_mask'].tolist()
+        self.path_mask = data['path_mask'].tolist()
         self.num_classes = 3
 
     def __len__(self):
@@ -40,7 +40,7 @@ class Dataset(torch.utils.data.Dataset):
         img_t = np.transpose(norm_image, (2,0,1))
         mask_oh = np.transpose(mask ,(2,0,1))
 
-        return img_t, mask_oh
+        return torch.tensor(img_t), torch.tensor(mask_oh)
 
 
 class DataModule(pl.LightningDataModule):
