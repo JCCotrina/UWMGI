@@ -24,7 +24,7 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, ix):
         path_image = self.path_img[ix]
-        path_mask = self.path_mask[ix]
+        path_mask = self.path_mask[ix].replace("../input/preprocessing/", "../input/preprocessing-uwm/")
 
         print()
         img = cv2.imread(path_image, cv2.IMREAD_UNCHANGED)
@@ -75,7 +75,7 @@ class DataModule(pl.LightningDataModule):
     def setup(self,fold=0, stage=None):
         # get list of patients
         data = pd.read_csv(self.file)
-        data['path_mask'] = data['path_mask'].replace("../input/preprocessing/", "../input/preprocessing-uwm")
+
         train = data.query("fold!=@fold").reset_index(drop=True)
         val = data.query("fold==@fold").reset_index(drop=True)
 
