@@ -11,7 +11,7 @@ def get_cbs(config):
     if config['log']:
         checkpoint = ModelCheckpoint(
             dirpath='./', 
-            filename=f"{config['model']}-{config['backbone']}-{config['max_epochs']}-{{val_iou:.4f}}",
+            filename=f"{config['model']}-{config['backbone']}-{config['max_epochs']}-{{val_loss:.4f}}",
             save_top_k=1, 
             monitor='val_loss', 
             mode='min'
@@ -25,7 +25,7 @@ def train(config):
     dm = DataModule(**config)
     model = SMP.load_from_checkpoint(config['load_from']) if config['load_from'] else SMP(config)
 
-    wandb_logger = WandbLogger(project="UWMGI_3", config=config)
+    wandb_logger = WandbLogger(project="UWMGI_VF", config=config)
     trainer = pl.Trainer(
         gpus=config['gpus'],
         precision=config['precision'],

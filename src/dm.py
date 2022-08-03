@@ -91,18 +91,18 @@ class DataModule(pl.LightningDataModule):
             trans =A.Compose([
                     A.Resize( height=224, width=224, interpolation=cv2.INTER_NEAREST),
                     A.HorizontalFlip(p=0.5),
-            #         A.VerticalFlip(p=0.5),
+                    A.RandomRotate90(p=0.5),
                     A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.05, rotate_limit=10, p=0.5),
                     A.OneOf([
                         A.GridDistortion(num_steps=5, distort_limit=0.05, p=1.0),
             # #             A.OpticalDistortion(distort_limit=0.05, shift_limit=0.05, p=1.0),
-                        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0)
+                        A.ElasticTransform(alpha=1, sigma=50, alpha_affine=50, p=1.0),
+                        A.GaussianBlur(),
                     ], p=0.25),
                     A.CoarseDropout(max_holes=8, max_height=11, max_width=11,
                                     min_holes=5, fill_value=0, mask_fill_value=0, p=0.5),
                     ], p=1.0),
         )
-
 
         self.val_ds = Dataset(
             self.path,
@@ -111,7 +111,6 @@ class DataModule(pl.LightningDataModule):
                 getattr(A, trans)(**params) for trans, params in self.val_trans.items()
             ]) if self.val_trans else None
         )
-
 
     def train_dataloader(self):
         return DataLoader(
@@ -126,7 +125,7 @@ class DataModule(pl.LightningDataModule):
     def val_dataloader(self):
         return DataLoader(
             self.val_ds,
-            batch_size=self.batch_size,
+            batch_size=2*self.batch_size,
             num_workers=self.num_workers,
             shuffle=False,
             pin_memory=self.pin_memory,
