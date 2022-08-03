@@ -14,6 +14,7 @@ class Dataset(torch.utils.data.Dataset):
     def __init__(self, path, data, trans=None):
         self.path = path
         self.data = data
+        self.trans = trans
         self.path_img = data['path_img'].tolist()
         self.path_mask = data['path_mask'].tolist()
         self.num_classes = 3
