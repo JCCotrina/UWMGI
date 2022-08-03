@@ -29,13 +29,22 @@ class SMP(pl.LightningModule):
         ious = (intersection + eps) / union
         return torch.mean(ious, dim=(1,0))
 
+    def dice(self, pr, gt, eps=1e-3):
+        gt = gt.to(torch.float32)
+        pr = (pr>0.5).to(torch.float32)
+        tp = torch.sum(gt * pr, dim=(2,3))
+        fp = torch.sum(pr, axis=(2, 3)) 
+        fn = torch.sum(gt, axis=(2, 3)) 
+        loss = (2.*tp + eps) / (fn + fp + eps)
+        return torch.mean(loss, dim=(1,0))
+
     def training_step(self, batch, batch_idx):
         x, y = batch
         y_hat = self(x)
         loss = self.loss(y_hat, y)
         y_hat = torch.sigmoid(y_hat)
         iou = self.iou(y_hat, y)
-        dice = losses.dice(y_hat, y)
+        dice = self.dice(y_hat, y)
         self.log('loss', loss)
         self.log('iou', iou, prog_bar=True)
         self.log('dice', dice)
@@ -47,7 +56,7 @@ class SMP(pl.LightningModule):
         loss = self.loss(y_hat, y)
         y_hat = torch.sigmoid(y_hat)
         iou = self.iou(y_hat, y)
-        dice = losses.dice(y_hat, y)
+        dice = self.dice(y_hat, y)
         self.log('val_loss', loss)
         self.log('val_iou', iou, prog_bar=True)
         self.log('dice', dice)
