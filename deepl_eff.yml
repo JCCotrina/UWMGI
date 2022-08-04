@@ -1,0 +1,47 @@
+ # optimization
+lr: 0.002
+weight_decay: 0.000001
+optimizer: "Adam"
+batch_size: 128
+loss: "criterion"
+scheduler:
+  CosineAnnealingLR:
+    eta_min: 0.000001
+    T_max: 260
+    verbose: True
+# data
+num_workers: 2
+pin_memory: True
+# model
+model: DeepLabV3Plus
+backbone: efficientnet-b1
+pretrained: imagenet
+load_from: False
+# data augmentation
+# train_trans:
+#   Resize:
+#     width: 224
+#     height: 224
+#   Transpose: {}
+#   HorizontalFlip: {}
+#   VerticalFlip: {}
+#   ShiftScaleRotate: {}
+#   GridDistortion: {}
+#   CoarseDropout: {}
+#   GaussianBlur: {}
+val_trans:
+  Resize:
+    width: 224
+    height: 224
+# training params
+gpus: 1
+precision: 16
+max_epochs: 15
+# debugging options
+train_batches: 1.
+shuffle_train: True
+val_batches: 1.
+val_with_train: False
+log: True
+path: '../input/uw-madison-gi-tract-image-segmentation/train'
+file: '../input/preprocessing-uwm/data_procesada.csv'  
