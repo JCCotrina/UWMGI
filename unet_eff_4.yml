@@ -14,7 +14,7 @@ num_workers: 2
 pin_memory: True
 # model
 model: Unet
-backbone: xception
+backbone: tu-xception
 pretrained: imagenet
 load_from: False
 # data augmentation
