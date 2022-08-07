@@ -24,7 +24,8 @@ class Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, ix):
         path_image = self.path_img[ix]
-        path_mask = self.path_mask[ix].replace("../input/preprocessing/", "../input/preprocessing-uwm/")
+        path_mask = self.path_mask[ix]
+        # path_mask = self.path_mask[ix].replace("../input/preprocessing/", "../input/preprocessing-uwm/")
 
         # print("#"*30)
         # print(path_image)
