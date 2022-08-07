@@ -35,7 +35,7 @@ val_trans:
     height: 224
 # training params
 gpus: 1
-# precision: 16
+precision: 32
 max_epochs: 15
 # debugging options
 train_batches: 1.
