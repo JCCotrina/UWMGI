@@ -14,7 +14,7 @@ num_workers: 2
 pin_memory: True
 # model
 model: Unet
-backbone: resnet18
+backbone: tu-xception
 pretrained: imagenet
 load_from: False
 # data augmentation
@@ -35,7 +35,7 @@ val_trans:
     height: 224
 # training params
 gpus: 1
-precision: 16
+# precision: 16
 max_epochs: 15
 # debugging options
 train_batches: 1.
