@@ -44,4 +44,4 @@ val_batches: 1.
 val_with_train: False
 log: True
 path: '../input/uw-madison-gi-tract-image-segmentation/train'
-file: '../input/preprocessing-uwm/data_procesada.csv'  
+file: '../input/preprocessing/data_procesada.csv'  
